@@ -26,7 +26,7 @@ public class DemoController {
 
     @GetMapping("/test")
     public String test() {
-        return "Test Successful";
+        return "Test Successful with Azure spring boot web app deployment and setup";
     }
 
 }
