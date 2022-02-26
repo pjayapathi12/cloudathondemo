@@ -1,6 +1,7 @@
 package com.cloudathon.cloudathondemo;
 
 import com.cloudathon.cloudathondemo.model.ErrorStatsRequest;
+import com.cloudathon.cloudathondemo.model.TCMRequest;
 import com.cloudathon.cloudathondemo.persistence.dao.ErrorStatsDao;
 import com.cloudathon.cloudathondemo.persistence.dao.TCMDao;
 import com.cloudathon.cloudathondemo.persistence.entity.ErrorStats;
@@ -38,16 +39,16 @@ public class DemoController {
     }
 
     @PostMapping("/getTCMDetails")
-    public TCM getTCMDetails(@RequestBody String tcm) {
-        return tcmDao.findByTcm(tcm);
+    public TCM getTCMDetails(@RequestBody TCMRequest request) {
+        return tcmDao.findByTcm(request.getTcm());
     }
 
-    @PostMapping("/test/getTCMDetails")
-    public TCM getTCMDetails() {
+    @GetMapping("/testGetTCMDetails")
+    public TCM getTestTCMDetails() {
         return tcmDao.findByTcm("TCM1");
     }
 
-    @PostMapping("/getTCMDetails")
+    @PostMapping("/getDetailedView")
     public List<ErrorStats> getDetailedView(@RequestBody ErrorStatsRequest request) {
         return errorStatsDao.fetchErrorStatsByTCMAndResource(request.getTcm(), request.getRresourceName());
     }
