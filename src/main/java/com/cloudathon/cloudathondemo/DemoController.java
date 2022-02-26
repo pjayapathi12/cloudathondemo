@@ -45,9 +45,17 @@ public class DemoController {
         return tcmDao.findByTcm("TCM1");
     }
 
+
+
     @PostMapping("/getDetailedView")
     public List<ErrorStats> getDetailedView(@RequestBody ErrorStatsRequest request) {
         return errorStatsDao.fetchErrorStatsByTCMAndResource(request.getTcm(), request.getRresourceName());
+    }
+
+    @GetMapping("/testGetDetailedView")
+    public List<ErrorStats> getTestDetailedView() {
+        return errorStatsDao.fetchErrorStatsByTCMAndResource("TCM1","bwflegacysvc");
+
     }
 
 }
