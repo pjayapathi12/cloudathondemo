@@ -7,10 +7,7 @@ import com.cloudathon.cloudathondemo.persistence.dao.TCMDao;
 import com.cloudathon.cloudathondemo.persistence.entity.ErrorStats;
 import com.cloudathon.cloudathondemo.persistence.entity.TCM;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,9 +35,9 @@ public class DemoController {
         return "Test Successful with Azure spring boot web app deployment and setup";
     }
 
-    @PostMapping("/getTCMDetails")
-    public TCM getTCMDetails(@RequestBody TCMRequest request) {
-        return tcmDao.findByTcm(request.getTcm());
+    @GetMapping("/getTCMDetails/{tcm}")
+    public TCM getTCMDetails(@PathVariable String tcm) {
+        return tcmDao.findByTcm(tcm);
     }
 
     @GetMapping("/testGetTCMDetails")
