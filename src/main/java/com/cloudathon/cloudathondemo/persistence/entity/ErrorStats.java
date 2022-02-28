@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.sql.Clob;
 
 @Entity
-@Table(name = "ERROR_STATS")
+@Table(name = "ERROR_STATS_NEW")
 @IdClass(ErrorStatsId.class)
 @FieldDefaults(level= AccessLevel.PRIVATE)
 @Data
@@ -26,6 +26,7 @@ public class ErrorStats {
     @Column(name = "TCM")
     String tcm;
 
+    @Id
     @Column(name = "RESOURCE_NAME")
     String resourceName;
 

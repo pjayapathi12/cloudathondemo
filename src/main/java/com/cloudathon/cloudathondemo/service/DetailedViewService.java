@@ -17,6 +17,7 @@ public class DetailedViewService {
     private ErrorStatsDao errorStatsDao;
 
     public List<ErrorStats> getDetailedView(String tcm,String resourceName){
+
         List<Object[]> objList = errorStatsDao.fetchErrorStatsByTCMAndResource(tcm,resourceName);
         List<ErrorStats> errorStats = new ArrayList<>();
         if(null != objList && !objList.isEmpty()) {
@@ -26,12 +27,12 @@ public class DetailedViewService {
             objList.forEach(obj ->
                     errorStats.add(
                             new ErrorStats(obj[0].toString(),
-                                    obj[1].toString(),
                                     obj[6].toString(),
-                                    obj[3].toString(),
+                                    obj[1].toString(),
                                     obj[4].toString(),
+                                    obj[2].toString(),
                                     obj[5].toString(),
-                                    obj[2].toString())));
+                                    obj[3].toString())));
 
             log.info("Service Response Size:{}, First Result{}", errorStats.size(), errorStats.get(0));
         }

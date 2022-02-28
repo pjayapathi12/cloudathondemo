@@ -81,7 +81,7 @@ public class DemoController {
 
     }
 
-    @GetMapping("/getSummaryView")
+    @PostMapping("/getSummaryView")
     public List<SummaryViewResponse> getSummaryView(@RequestBody ErrorStatsRequest request) {
         return summaryViewResponseService.getSummaryView(request.getTcm(),request.getResourceName());
 

@@ -15,4 +15,5 @@ import java.io.Serializable;
 public class ErrorStatsId implements Serializable {
     String errorName;
     String tcm;
+    String resourceName;
 }
