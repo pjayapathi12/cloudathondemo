@@ -43,15 +43,15 @@ public class DemoController {
     }
 
     @GetMapping("/getTCMDetails/{tcm}")
-    public TCM getTCMDetails(@PathVariable String tcm, @RequestParam(required = false) boolean redis) throws JsonProcessingException {
-        if (redis)
+    public TCM getTCMDetails(@PathVariable String tcm, @RequestParam(required = false, name = "redis" ) String redis) throws JsonProcessingException {
+        if (redis != null && redis.equalsIgnoreCase("true"))
             return redisService.findTcm(tcm);
         return tcmDao.findByTcm(tcm);
     }
 
     @GetMapping("/getAllTCMs")
-    public List<TCM> getTCMDetails(@RequestParam(required = false) boolean redis) throws JsonProcessingException {
-        if(redis)
+    public List<TCM> getTCMDetails(@RequestParam(required = false, name = "redis") String redis) throws JsonProcessingException {
+        if (redis != null && redis.equalsIgnoreCase("true"))
             return redisService.findAllTcm();
         return tcmDao.findAll();
     }
@@ -64,9 +64,9 @@ public class DemoController {
 
 
     @PostMapping("/getDetailedView")
-    public List<ErrorStats> getDetailedView(@RequestBody ErrorStatsRequest request, @RequestParam(required = false) boolean redis)
+    public List<ErrorStats> getDetailedView(@RequestBody ErrorStatsRequest request, @RequestParam(required = false, name="redis") String redis)
             throws JsonProcessingException {
-        if (redis)
+        if (redis != null && redis.equalsIgnoreCase("true"))
             return redisService.findDetailResource(request.getTcm(), request.getResourceName());
         return detailedViewService.getDetailedView(request.getTcm(), request.getResourceName());
     }
