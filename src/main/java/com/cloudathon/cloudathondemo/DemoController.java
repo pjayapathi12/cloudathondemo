@@ -7,6 +7,8 @@ import com.cloudathon.cloudathondemo.persistence.dao.TCMDao;
 import com.cloudathon.cloudathondemo.persistence.entity.ErrorStats;
 import com.cloudathon.cloudathondemo.persistence.entity.TCM;
 import com.cloudathon.cloudathondemo.service.DetailedViewService;
+import com.cloudathon.cloudathondemo.service.RedisService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +23,9 @@ public class DemoController {
     private TCMDao tcmDao;
     @Autowired
     private DetailedViewService detailedViewService;
+
+    @Autowired
+    private RedisService redisService;
 
     @PostMapping("/employee")
     public Employee addEmployee(@RequestBody Employee employee) {
@@ -38,13 +43,16 @@ public class DemoController {
     }
 
     @GetMapping("/getTCMDetails/{tcm}")
-    public TCM getTCMDetails(@PathVariable String tcm) {
+    public TCM getTCMDetails(@PathVariable String tcm, @RequestParam(required = false) boolean redis) throws JsonProcessingException {
+        if (redis)
+            return redisService.findTcm(tcm);
         return tcmDao.findByTcm(tcm);
     }
 
-
     @GetMapping("/getAllTCMs")
-    public List<TCM> getTCMDetails() {
+    public List<TCM> getTCMDetails(@RequestParam(required = false) boolean redis) throws JsonProcessingException {
+        if(redis)
+            return redisService.findAllTcm();
         return tcmDao.findAll();
     }
 
@@ -56,7 +64,10 @@ public class DemoController {
 
 
     @PostMapping("/getDetailedView")
-    public List<ErrorStats> getDetailedView(@RequestBody ErrorStatsRequest request) {
+    public List<ErrorStats> getDetailedView(@RequestBody ErrorStatsRequest request, @RequestParam(required = false) boolean redis)
+            throws JsonProcessingException {
+        if (redis)
+            return redisService.findDetailResource(request.getTcm(), request.getResourceName());
         return detailedViewService.getDetailedView(request.getTcm(), request.getResourceName());
     }
 
