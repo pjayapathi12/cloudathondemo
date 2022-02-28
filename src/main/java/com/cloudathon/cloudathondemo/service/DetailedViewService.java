@@ -18,7 +18,8 @@ public class DetailedViewService {
 
     public List<ErrorStats> getDetailedView(String tcm,String resourceName){
 
-        List<Object[]> objList = errorStatsDao.fetchErrorStatsByTCMAndResource(tcm,resourceName);
+        List<ErrorStats> objList = errorStatsDao.fetchErrorStatsByTCMAndResource(tcm,resourceName);
+        /*
         List<ErrorStats> errorStats = new ArrayList<>();
         if(null != objList && !objList.isEmpty()) {
             log.info("DB Result Size {}", objList.size());
@@ -36,7 +37,9 @@ public class DetailedViewService {
 
             log.info("Service Response Size:{}, First Result{}", errorStats.size(), errorStats.get(0));
         }
-        return errorStats;
+
+         */
+        return objList;
 
     }
 }
