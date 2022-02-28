@@ -2,12 +2,14 @@ package com.cloudathon.cloudathondemo;
 
 import com.cloudathon.cloudathondemo.model.ErrorStatsRequest;
 import com.cloudathon.cloudathondemo.model.TCMRequest;
+import com.cloudathon.cloudathondemo.models.SummaryViewResponse;
 import com.cloudathon.cloudathondemo.persistence.dao.ErrorStatsDao;
 import com.cloudathon.cloudathondemo.persistence.dao.TCMDao;
 import com.cloudathon.cloudathondemo.persistence.entity.ErrorStats;
 import com.cloudathon.cloudathondemo.persistence.entity.TCM;
 import com.cloudathon.cloudathondemo.service.DetailedViewService;
 import com.cloudathon.cloudathondemo.service.RedisService;
+import com.cloudathon.cloudathondemo.service.SummaryViewResponseService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +25,8 @@ public class DemoController {
     private TCMDao tcmDao;
     @Autowired
     private DetailedViewService detailedViewService;
+    @Autowired
+    private SummaryViewResponseService summaryViewResponseService;
 
     @Autowired
     private RedisService redisService;
@@ -74,6 +78,18 @@ public class DemoController {
     @GetMapping("/testGetDetailedView")
     public List<ErrorStats> getTestDetailedView() {
         return detailedViewService.getDetailedView("TCM1","bwflegacysvc");
+
+    }
+
+    @GetMapping("/getSummaryView")
+    public List<SummaryViewResponse> getSummaryView(@RequestBody ErrorStatsRequest request) {
+        return summaryViewResponseService.getSummaryView(request.getTcm(),request.getResourceName());
+
+    }
+
+    @GetMapping("/testGetSummaryView")
+    public List<SummaryViewResponse> getTestSummaryView() {
+        return summaryViewResponseService.getSummaryView("123456789","ALL");
 
     }
 
