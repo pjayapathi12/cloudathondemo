@@ -64,13 +64,25 @@ public class SummaryViewResponseService {
                 }
                 summaryViewResponse.setResourceName(rName);
                 List<SummaryViewStatsItem> summaryViewStatsItemList = new ArrayList<>();
+                SummaryViewStatsItem netNewSummaryViewStatsItem = new SummaryViewStatsItem();
+                netNewSummaryViewStatsItem.setEnv("NETNEW");
+                netNewSummaryViewStatsItem.setTotalCount(15);
+                SummaryViewStatsErrorItem errorItem1 = SummaryViewStatsErrorItem.builder().errorType("403").errorCount(10).build();
+                SummaryViewStatsErrorItem errorItem2 = SummaryViewStatsErrorItem.builder().errorType("401").errorCount(5).build();
+                List<SummaryViewStatsErrorItem> netNewErrorList = new ArrayList<>();
+                netNewErrorList.add(errorItem1);
+                netNewErrorList.add(errorItem2);
+                netNewSummaryViewStatsItem.setError(netNewErrorList);
+
                 SummaryViewStatsItem prodSummaryViewStatsItem = new SummaryViewStatsItem();
                 prodSummaryViewStatsItem.setEnv("PROD");
+                Integer prodTotalCount = 0;
                 List<SummaryViewStatsErrorItem> prodErrorList = new ArrayList<>();
 
 
                 SummaryViewStatsItem qaSummaryViewStatsItem = new SummaryViewStatsItem();
                 qaSummaryViewStatsItem.setEnv("QA");
+                Integer qaTotalCount = 0;
                 List<SummaryViewStatsErrorItem> qaErrorList = new ArrayList<>();
 
                 Set<String> keyList = envCountMap.keySet();
@@ -84,23 +96,30 @@ public class SummaryViewResponseService {
                         String[] array = currentKey.split("_");
                         log.info("Checking error type value in Key {}",array[1]);
                         errorItem.setErrorType(array[1]);
-                        errorItem.setErrorCount((Integer) envCountMap.get(currentKey));
+                        Integer errorCount = (Integer) envCountMap.get(currentKey);
+                        errorItem.setErrorCount(errorCount);
+                        prodTotalCount += errorCount;
                         prodErrorList.add(errorItem);
                     }
                     else if(currentKey.contains("qa")){
                         String[] array = currentKey.split("_");
                         log.info("Checking error type value in Key {}",array[1]);
                         errorItem.setErrorType(array[1]);
-                        errorItem.setErrorCount((Integer) envCountMap.get(currentKey));
+                        Integer errorCount = (Integer) envCountMap.get(currentKey);
+                        errorItem.setErrorCount(errorCount);
+                        qaTotalCount += errorCount;
                         qaErrorList.add(errorItem);
                     }
 
 
                 }
                 prodSummaryViewStatsItem.setError(prodErrorList);
+                prodSummaryViewStatsItem.setTotalCount(prodTotalCount);
                 qaSummaryViewStatsItem.setError(qaErrorList);
+                qaSummaryViewStatsItem.setTotalCount(qaTotalCount);
                 summaryViewStatsItemList.add(prodSummaryViewStatsItem);
                 summaryViewStatsItemList.add(qaSummaryViewStatsItem);
+                summaryViewStatsItemList.add(netNewSummaryViewStatsItem);
                 summaryViewResponse.setSummaryViewStats(summaryViewStatsItemList);
                 summaryViewResponseList.add(summaryViewResponse);
 

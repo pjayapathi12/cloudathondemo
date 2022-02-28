@@ -2,11 +2,9 @@ package com.cloudathon.cloudathondemo.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
+@Builder
 
 @JsonIgnoreProperties
 @JsonInclude(JsonInclude.Include.NON_NULL)
