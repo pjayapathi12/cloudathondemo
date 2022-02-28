@@ -40,6 +40,12 @@ public class DemoController {
         return tcmDao.findByTcm(tcm);
     }
 
+
+    @GetMapping("/getAllTCMs")
+    public List<TCM> getTCMDetails() {
+        return tcmDao.findAll();
+    }
+
     @GetMapping("/testGetTCMDetails")
     public TCM getTestTCMDetails() {
         return tcmDao.findByTcm("TCM1");
