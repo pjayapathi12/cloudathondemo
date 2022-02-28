@@ -15,5 +15,5 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 public class ErrorStatsRequest {
     String tcm;
-    String rresourceName;
+    String resourceName;
 }

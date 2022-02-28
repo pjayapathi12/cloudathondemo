@@ -6,6 +6,7 @@ import com.cloudathon.cloudathondemo.persistence.dao.ErrorStatsDao;
 import com.cloudathon.cloudathondemo.persistence.dao.TCMDao;
 import com.cloudathon.cloudathondemo.persistence.entity.ErrorStats;
 import com.cloudathon.cloudathondemo.persistence.entity.TCM;
+import com.cloudathon.cloudathondemo.service.DetailedViewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,8 @@ public class DemoController {
     private EmployeeRepository repository;
     @Autowired
     private TCMDao tcmDao;
-    private ErrorStatsDao errorStatsDao;
+    @Autowired
+    private DetailedViewService detailedViewService;
 
     @PostMapping("/employee")
     public Employee addEmployee(@RequestBody Employee employee) {
@@ -55,12 +57,12 @@ public class DemoController {
 
     @PostMapping("/getDetailedView")
     public List<ErrorStats> getDetailedView(@RequestBody ErrorStatsRequest request) {
-        return errorStatsDao.fetchErrorStatsByTCMAndResource(request.getTcm(), request.getRresourceName());
+        return detailedViewService.getDetailedView(request.getTcm(), request.getResourceName());
     }
 
     @GetMapping("/testGetDetailedView")
     public List<ErrorStats> getTestDetailedView() {
-        return errorStatsDao.fetchErrorStatsByTCMAndResource("TCM1","bwflegacysvc");
+        return detailedViewService.getDetailedView("TCM1","bwflegacysvc");
 
     }
 

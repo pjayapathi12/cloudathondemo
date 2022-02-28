@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface ErrorStatsDao extends JpaRepository<ErrorStats, ErrorStatsRequest> {
 
-    @Query("SELECT tcm,resourceName FROM ErrorStats  WHERE tcm = ?1 and resourceName = ?2")
-    public List<ErrorStats> fetchErrorStatsByTCMAndResource(String tcm,String resourceName);
+    @Query(value = "SELECT * FROM ERROR_STATS  WHERE TCM = ?1 and RESOURCE_NAME = ?2",nativeQuery = true)
+    public List<Object[]> fetchErrorStatsByTCMAndResource(String tcm,String resourceName);
 }
